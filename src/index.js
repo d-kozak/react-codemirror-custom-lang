@@ -1,12 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
+import CodeMirror from 'react-codemirror';
+
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+// import the codemirror styles, otherwise nothing is shown
+import 'codemirror/lib/codemirror.css';
+// import the custom mode
+import './languageMode';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const App = () => {
+    const [code, setCode] = useState('1 + 2 - 3');
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    const options = {
+        lineNumbers: true,
+
+        // specify the custom mode
+        mode: 'calc'
+    };
+
+    return (
+        <div>
+            <h1>React code mirror - custom lang</h1>
+            <CodeMirror value={code} onChange={newCode => setCode(newCode)} options={options}/>
+        </div>
+    );
+};
+
+ReactDOM.render(<App/>, document.getElementById('root'));
+
